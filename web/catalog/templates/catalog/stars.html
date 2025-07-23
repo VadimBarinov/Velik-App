@@ -1,0 +1,130 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load catalog_tags %}
+{% block content %} 
+<!-- фильтр -->
+{% if bike_stars %}
+<div class="container">
+  <div class="d-flex row">
+    <div class="col-0 col-lg-3"></div>
+    <div class="col-12 col-lg-6 my-catalog-filter">
+      <form method="get">
+        <div class="d-flex mb-3 search-container">
+          <div class="d-flex">
+            <div class="input-box my-search-box">
+              <input
+                class="form-control"
+                type="text"
+                name="query"
+                
+                {% if input_value %}
+                value="{{ input_value }}"
+                {% endif %}
+                  
+              />
+              <img src="{% static 'catalog/images/search.svg' %}" class="my-search-icon" />
+            </div>
+          </div>
+          <div class="d-flex">
+            <div>
+              <button type="submit" class="border my-border my-btn-search btn-right">Поиск</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-0 col-lg-3"></div>
+  </div>
+</div>
+
+{% if not bikes %}
+<div class="container">
+  <div class="empty-bikes">
+    <p>По вашему запросу ничего не найдено</p>
+  </div>
+</div>
+{% endif %}
+
+{% endif %}
+
+
+{% include 'catalog/includes/list_stars.html' %}
+
+
+{% if bike_stars %}
+  
+<div class="container">
+  <nav class="list-pages">
+    <ul>
+  
+      <li class="page-num">
+        
+        {% if input_value %}
+        <a class="border my-border" href="?query={{input_value}}&page=1">&laquo;</a>
+        {% else %}
+        <a class="border my-border" href="?page=1">&laquo;</a>
+        {% endif %}
+          
+      </li>
+        
+      {% for p in paginator.page_range %}
+      
+      {% if page_obj.number == p %}
+      <li class="page-num page-num-selected">{{ p }}</li>
+      {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:1 %}
+      <li class="page-num">
+        
+        {% if input_value %}
+        <a class="border my-border" href="?query={{input_value}}&page={{ p }}">{{ p }}</a>
+        {% else %}
+        <a class="border my-border" href="?page={{ p }}">{{ p }}</a>
+        {% endif %}
+          
+      </li>
+      {% elif p == page_obj.number|add:-2 or p == page_obj.number|add:2%}
+      <li class="page-num d-none d-md-inline-block d-lg-inline-block">
+        
+        {% if input_value %}
+        <a class="border my-border" href="?query={{input_value}}&page={{ p }}">{{ p }}</a>
+        {% else %}
+        <a class="border my-border" href="?page={{ p }}">{{ p }}</a>
+        {% endif %}
+          
+      </li>
+      {% endif %}
+        
+      {% endfor %}
+
+      <li class="page-num">
+        
+        {% if input_value %}
+        <a class="border my-border" href="?query={{input_value}}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+        {% else %}
+        <a class="border my-border" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+        {% endif %}
+          
+      </li>
+        
+    </ul>
+  </nav>
+</div>
+
+{% else %}
+
+<div class="container">
+  <div class="empty-favorites">
+    <h1>В ваших оценках пока пусто</h1>
+    <p>Оцените велосипед и он появится здесь</p>
+    <div class="button-catalog-favorites">
+      <a href="{% url 'catalog' %}">
+        <button class="btn btn-outline-primary">
+          Перейти в каталог
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

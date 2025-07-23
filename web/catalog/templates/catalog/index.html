@@ -1,0 +1,13 @@
+{%extends 'base.html'%} {%load catalog_tags%} {%load static%} {%block content%}
+{%show_carousel%}
+<div class="container my-view-all">
+  <div class="my-view-all-container">
+    <a class="nav-link" href="{% url 'catalog' %}">
+      Посмотреть все <img src="{% static 'catalog/images/right.svg' %}" />
+    </a>
+  </div>
+</div>
+
+{% include 'catalog/includes/list_bikes.html' %}
+
+{%endblock%}

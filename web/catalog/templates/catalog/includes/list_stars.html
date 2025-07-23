@@ -1,0 +1,115 @@
+{%load static%}
+{%load catalog_tags%}
+<div class="container">
+  <div class="row">
+    {% for bike in bikes %}
+    <div class="my-card-col col-12 col-lg-6">
+      <a class="onclick-card" href="{{bike.get_absolute_url}}">
+        <div class="card">
+          
+          <div class="card-body">
+            <div class="d-flex row">
+                <div class="col-12 col-md-6 col-lg-6">
+                    {% if bike.star_count == 0 %}
+                    <div class="card-star ps-0">
+                        <img src="{% static 'catalog/images/black_star.svg' %}" />
+                        <div>&nbsp</div>
+                        <div class="text-grey">
+                        нет оценок
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card-star ps-0">
+                        <img src="{% static 'catalog/images/grad_star.svg' %}" />
+                        <div>&nbsp</div>
+                        <div>
+                        {{ bike.star|floatformat:1 }}
+                        </div>
+                    </div>
+                    {% endif %}
+        
+                    {% if bike.img_url|find_image %}
+                    <img src="{{ bike.img_url.url }}" class="card-img-top p-md-0 p-lg-0 h-md-100 w-md-100" />
+                    {% else %}
+                    <img src="{{ default_img }}" class="card-img-top p-md-0 p-lg-0 h-md-100 w-md-100" />
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card-title-container">
+                      <h5 class="card-title">{{ bike.mark.name }} {{ bike.name }}</h5>
+                    </div>
+                    <div class="your-star">
+                        <p>Ваша оценка:</p>
+                    </div>
+                    <div class="star-container">
+                        <div class="w-100 d-flex p-0">
+                          
+                          {% my_range 1 6 as range_massive %}
+                          {% for i in range_massive %}
+                          
+                            {% if i <= bike_stars|get_value_from_dict:bike.pk %}
+                          
+                            <img class="star-card {% if forloop.first %}btn-left{% elif forloop.last %}btn-right{% endif %}" 
+                            id="star-{{i}}-{{bike.pk}}" 
+                            src="{% static 'catalog/images/grad_star.svg' %}"/>
+
+                            {% else %}
+
+                            <img class="star-card {% if forloop.first %}btn-left{% elif forloop.last %}btn-right{% endif %}" 
+                            id="star-{{i}}-{{bike.pk}}" 
+                            src="{% static 'catalog/images/black_star.svg' %}"/>
+
+                            {% endif %}
+                            
+                          {% endfor %}
+                            
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      
+                      {% if bike.pk in bike_favourites %}
+        
+                      <form name="formFavorite" method="post" class="d-flex">
+                        {% csrf_token %}
+                        <input type="hidden" name="bike_selected" value="{{bike.pk}}"/>
+                        <input type="hidden" name="favourite_or_star" value="favourite"/>
+                        <div>
+                          <button
+                            id="clickOnBtnFavorite{{bike.pk}}"
+                            class="btn btn-outline-primary btn-card"
+                            type="submit"
+                          >
+                            В избранном
+                          </button>
+                        </div>
+                      </form>
+                      
+                      {% else %}
+        
+                      <form name="formFavorite" method="post" class="d-flex">
+                        {% csrf_token %}
+                        <input type="hidden" name="bike_selected" value="{{bike.pk}}"/>
+                        <input type="hidden" name="favourite_or_star" value="favourite"/>
+                        <div>
+                          <button
+                            id="clickOnBtnFavorite{{bike.pk}}"
+                            class="btn btn-primary btn-card"
+                            type="submit"
+                          >
+                            В избранное
+                          </button>
+                        </div>
+                      </form>
+                        
+                      {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>

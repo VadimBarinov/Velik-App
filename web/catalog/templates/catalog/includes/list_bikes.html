@@ -1,0 +1,93 @@
+{%load static%}
+{%load catalog_tags%}
+<div class="container">
+  <div class="row">
+    {% for bike in bikes %}
+    <div class="my-card-col col-12 col-md-6 col-lg-4">
+      <a class="onclick-card" href="{{bike.get_absolute_url}}">
+        <div class="card">
+          
+          {% if bike.star_count == 0 %}
+          <div class="card-star">
+            <img src="{% static 'catalog/images/black_star.svg' %}" />
+            <div>&nbsp</div>
+            <div class="text-grey">
+              нет оценок
+            </div>
+          </div>
+          {% else %}
+          <div class="card-star">
+            <img src="{% static 'catalog/images/grad_star.svg' %}" />
+            <div>&nbsp</div>
+            <div>
+              {{ bike.star|floatformat:1 }}
+            </div>
+          </div>
+          {% endif %}
+
+          {% if bike.img_url|find_image %}
+          <img src="{{ bike.img_url.url }}" class="card-img-top" />
+          {% else %}
+          <img src="{{ default_img }}" class="card-img-top" />
+          {% endif %}
+          
+          <div class="card-body">
+            <div class="card-title-container">
+              <h5 class="card-title">{{ bike.mark.name }} {{ bike.name }}</h5>
+            </div>
+            <div class="d-flex row">
+              
+              {% if bike.pk in bike_favourites %}
+
+              <form name="formFavorite" method="post" class="d-flex">
+                {% csrf_token %}
+                <input type="hidden" name="bike_selected" value="{{bike.pk}}"/>
+                <input type="hidden" name="favourite_or_star" value="favourite"/>
+                <div class="col-2 d-flex align-items-center">
+                  <button class="btn btn-heart" type="submit">
+                    <img id="clickOnHeartFavorite{{bike.pk}}" src="{% static 'catalog/images/grad_heart.svg' %}" />
+                  </button>
+                </div>
+                <div class="col-10 d-flex">
+                  <button
+                    id="clickOnBtnFavorite{{bike.pk}}"
+                    class="btn btn-outline-primary btn-right btn-card"
+                    type="submit"
+                  >
+                    В избранном
+                  </button>
+                </div>
+              </form>
+              
+              {% else %}
+
+              <form name="formFavorite" method="post" class="d-flex">
+                {% csrf_token %}
+                <input type="hidden" name="bike_selected" value="{{bike.pk}}"/>
+                <input type="hidden" name="favourite_or_star" value="favourite"/>
+                <div class="col-2 d-flex align-items-center">
+                  <button class="btn btn-heart" type="submit">
+                    <img id="clickOnHeartFavorite{{bike.pk}}" src="{% static 'catalog/images/black_heart.svg' %}" />
+                  </button>
+                </div>
+                <div class="col-10 d-flex">
+                  <button
+                    id="clickOnBtnFavorite{{bike.pk}}"
+                    class="btn btn-primary btn-right btn-card"
+                    type="submit"
+                  >
+                    В избранное
+                  </button>
+                </div>
+              </form>
+                
+              {% endif %}
+                
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>

@@ -23,6 +23,8 @@ EMAIL_PORT = 465
 # ---------------------------------------------------------------------------------------
 # EMAIL_HOST_USER = secret_keys.EMAIL_HOST_USER
 # EMAIL_HOST_PASSWORD = secret_keys.EMAIL_HOST_PASSWORD 
+EMAIL_HOST_USER = 'YOUR EMAIL'
+EMAIL_HOST_PASSWORD = 'YOUR EMAIL HOST PASSWORD'
 # ---------------------------------------------------------------------------------------
 
 EMAIL_USE_SSL = True

@@ -1,4 +1,5 @@
-import secret_keys
+# В файле secret_keys указываются параметры для SMTP
+# import secret_keys
 
 ALLOWED_HOSTS = ['*']
 
@@ -20,8 +21,8 @@ EMAIL_PORT = 465
 
 # Указать свои параметры для корректной работы восстановления пароля по электронной почте
 # ---------------------------------------------------------------------------------------
-EMAIL_HOST_USER = secret_keys.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = secret_keys.EMAIL_HOST_PASSWORD 
+# EMAIL_HOST_USER = secret_keys.EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD = secret_keys.EMAIL_HOST_PASSWORD 
 # ---------------------------------------------------------------------------------------
 
 EMAIL_USE_SSL = True

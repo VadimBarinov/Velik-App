@@ -9,8 +9,6 @@ services:
       # python3 manage.py migrate
       # ----------------------------------------------------------
 
-    ports:
-      - '8000:8000'
     depends_on:
       - db
     networks:
@@ -43,8 +41,6 @@ services:
 
   db:
     image: mysql:latest
-    ports:
-      - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: 'qwerty1234'
     restart: always

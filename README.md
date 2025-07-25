@@ -68,6 +68,14 @@
 
 # Описание API для получения рекомендаций
 
+API доступно по адресу:
+
+```bash
+    http://localhost:8080/
+```
+
+Также доступ к API будет по внутреннему _ip_ адресу вашего компьютера
+
 ## Реализован GET запрос (/recommendations/) для формирования рекомендаций
 
 #### Args:
@@ -79,7 +87,15 @@
 
     - Список объектов таблицы BikeModel
 
-#### Response example (bike_id=15094):
+#### Example (bike_id=15094):
+
+Request URL
+
+```bash
+  http://localhost:8080/recommendations/?bike_id=15094
+```
+
+Response body
 
 ```json
 [
@@ -112,6 +128,18 @@
   }
 ]
 ```
+
+## Swagger UI
+
+Swagger UI будет доступен по адресу:
+
+```bash
+    http://localhost:8080/docs
+```
+
+Также доступ будет по внутреннему _ip_ адресу
+
+![](github_images/Swagger_UI.png)
 
 ---
 

@@ -1,7 +1,7 @@
 FROM mysql:latest
 
-ENV MYSQL_DATABASE=db_name
-ENV MYSQL_ROOT_PASSWORD=super_password
+ENV MYSQL_DATABASE=db_site_velik
+ENV MYSQL_ROOT_PASSWORD=root
 
 COPY . /docker-entrypoint-initdb.d/
 
